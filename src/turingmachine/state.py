@@ -1,6 +1,18 @@
-from ctypes import c_byte
 
-from turingmachine.structs import StateAction
+from __future__ import annotations
+
+from ctypes import c_byte
+from typing import Union
+
+from dataclasses import dataclass
+
+from turingmachine.structs import MoveAction
+
+@dataclass
+class StateAction():
+    write_value: Union[c_byte, None]
+    move_action: MoveAction
+    state: State
 
 class State:
     ident: str 
@@ -20,3 +32,4 @@ class State:
             return self.actions[value] 
         
         raise Exception("State does not have action assigned to value %d", value)
+
