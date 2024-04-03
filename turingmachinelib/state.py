@@ -32,4 +32,12 @@ class State:
             return self.actions[value] 
         
         raise Exception("State does not have action assigned to value %d", value)
+    
+    def __eq__(self, other):
+        
+        if not isinstance(other, State):
+            return False
+        
+        return self.ident == other.get_ident()
+
 
