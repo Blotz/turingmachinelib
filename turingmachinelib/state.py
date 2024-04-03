@@ -19,7 +19,7 @@ class State:
     actions: dict[c_byte, StateAction] = dict()
 
     def __init__(self, identity) -> None:
-        self.ient = identity
+        self.ident = identity
     
     def get_ident(self) -> str:
         return self.ident
@@ -34,7 +34,7 @@ class State:
         raise Exception("State does not have action assigned to value %d", value)
     
     def __eq__(self, other):
-        
+
         if not isinstance(other, State):
             return False
         
