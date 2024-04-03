@@ -12,6 +12,7 @@ class Pointer:
     index: int
     tape: list[c_byte]
     state: State
+    output: str
 
     INCREASE_AMOUNT: int = 50
     ALPHABET: set[c_byte] = set(range(0,256))
@@ -21,6 +22,7 @@ class Pointer:
         self.state = state  # Set the Inital State
         self.index = 50
         self.tape = [0]*100
+        self.output = ""
         
 
     def compute(self) -> None:
@@ -55,7 +57,7 @@ class Pointer:
             # Dont move
             pass
         elif move_action == MoveAction.PRINT:
-            print(chr(self.tape[self.index]), end="")
+            self.output += chr(self.tape[self.index])
         else:
             raise Exception("Unexpected error has occured. ")
 
@@ -94,9 +96,9 @@ class Pointer:
 
     def get_state(self) -> State:
         return self.state
-    
-    def get_value(self) -> c_byte:
-        return self.tape[self.index]
+
+    def get_output(self) -> str:
+        return self.output
     
     def print_tm(self) -> None:
         """
@@ -136,5 +138,6 @@ class Pointer:
         output += " " * 14 + arrow_up + nl
 
         output += "State: \"" + self.state.get_ident() + "\"" + nl
+        output += "Output: \"" + self.output + "\"" + nl
 
         print(output)
