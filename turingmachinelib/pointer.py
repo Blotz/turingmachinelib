@@ -99,13 +99,11 @@ class Pointer:
         return self.tape[self.index]
     
     def print_tm(self) -> None:
-        ...
         """
         --- --- --- --- --- --- ---
            |123|123|123|123|123|
-        --- --- --- --- --- --- --- 
-                     ^ 
-                     58
+         --- --- --- --- --- --- --- 
+                      ^ 
         """
         padding = 2
         max_size = len(self.tape)
@@ -128,14 +126,14 @@ class Pointer:
         nl = "\n"
         bar = " ---" * 7
         box = "|%s"
-        wspace = " " * 4
+        wspace = "    "
         arrow_up = "^"
 
         output += bar + nl + wspace
         for value in preview_tape:
             output += box % str(value).rjust(3)
         output += "|" + wspace + nl + bar + nl
-        output += wspace + (padding * wspace) + "   " + arrow_up + nl
+        output += " " * 14 + arrow_up + nl
 
         output += "State: \"" + self.state.get_ident() + "\"" + nl
 

@@ -3,12 +3,6 @@ import pytest
 from turingmachinelib.state import State, StateAction
 from turingmachinelib.pointer import Pointer
 from turingmachinelib.structs import MoveAction
-state = State("")
-pointer = Pointer(state) 
-sa = StateAction(1, MoveAction.LEFT, state)
-state.set_action(0, sa)
-
-pointer.print_tm()
 
 
 def test_move_left():
