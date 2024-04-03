@@ -1,6 +1,15 @@
+import pytest
+
 from turingmachinelib.state import State, StateAction
 from turingmachinelib.pointer import Pointer
 from turingmachinelib.structs import MoveAction
+state = State("")
+pointer = Pointer(state) 
+sa = StateAction(1, MoveAction.LEFT, state)
+state.set_action(0, sa)
+
+pointer.print_tm()
+
 
 def test_move_left():
     state = State("")
@@ -75,6 +84,12 @@ def test_move():
 
     assert staring_point == next_point
 
+    staring_point = pointer.index
+    pointer.move(MoveAction.PRINT)
+    next_point = pointer.index
+
+    assert staring_point == next_point
+
 def test_write():
     state = State("")
     pointer = Pointer(state) 
@@ -113,3 +128,23 @@ def test_compute():
 
     assert pointer.tape[next_index] == 1
 
+    # Make next state halt state
+    halt_state = State("HALT")
+    sa = StateAction(1, MoveAction.LEFT, halt_state)
+    state.set_action(0, sa)
+
+    # Move to halt state
+    pointer.compute()
+
+    with pytest.raises(Exception):
+        pointer.compute() # raises Exception when done
+
+
+def test_print():
+    # Simple TM for moving left and setting tape values to 1
+    state = State("")
+    pointer = Pointer(state) 
+    sa = StateAction(1, MoveAction.LEFT, state)
+    state.set_action(0, sa)
+
+    pointer.print_tm()

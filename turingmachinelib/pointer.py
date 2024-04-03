@@ -15,6 +15,7 @@ class Pointer:
 
     INCREASE_AMOUNT: int = 50
     ALPHABET: set[c_byte] = set(range(0,256))
+    HALT_STATE: str = "HALT"
 
     def __init__(self, state: State) -> None:
         self.state = state  # Set the Inital State
@@ -26,6 +27,9 @@ class Pointer:
         """
         Compute the current state
         """
+        if self.state.get_ident() == self.HALT_STATE:
+            raise Exception("Halt state reached. halting")
+
         action: StateAction = self.state.process(self.tape[self.index])
 
         # write
@@ -50,6 +54,8 @@ class Pointer:
         elif move_action == MoveAction.NONE:
             # Dont move
             pass
+        elif move_action == MoveAction.PRINT:
+            print(chr(self.tape[self.index]), end="")
         else:
             raise Exception("Unexpected error has occured. ")
 
@@ -86,5 +92,51 @@ class Pointer:
         # Write the value to tape
         self.tape[self.index] = value
 
-    def __str__(self) -> str:
-        return chr(self.tape[self.index])
+    def get_state(self) -> State:
+        return self.state
+    
+    def get_value(self) -> c_byte:
+        return self.tape[self.index]
+    
+    def print_tm(self) -> None:
+        ...
+        """
+        --- --- --- --- --- --- ---
+           |123|123|123|123|123|
+        --- --- --- --- --- --- --- 
+                     ^ 
+                     58
+        """
+        padding = 2
+        max_size = len(self.tape)
+        
+        left_index = self.index - padding
+        right_index = self.index + padding
+        left_buffer = 0
+        right_buffer = 0
+
+        if left_index < 0:
+            left_buffer = - left_index
+            left_index = 0
+        if right_index > max_size:
+            right_buffer = (right_index - max_size)
+            right_index = max_size
+
+        preview_tape = [0]*left_buffer + self.tape[left_index:right_index + 1] + [0]*right_buffer
+
+        output = ""
+        nl = "\n"
+        bar = " ---" * 7
+        box = "|%s"
+        wspace = " " * 4
+        arrow_up = "^"
+
+        output += bar + nl + wspace
+        for value in preview_tape:
+            output += box % str(value).rjust(3)
+        output += "|" + wspace + nl + bar + nl
+        output += wspace + (padding * wspace) + "   " + arrow_up + nl
+
+        output += "State: \"" + self.state.get_ident() + "\"" + nl
+
+        print(output)
