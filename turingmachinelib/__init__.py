@@ -1,3 +1,3 @@
-import turingmachinelang.pointer
-import turingmachinelang.state
-import turingmachinelang.structs
+from turingmachinelang import pointer
+from turingmachinelang import state
+from turingmachinelang import structs
