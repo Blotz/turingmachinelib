@@ -16,10 +16,11 @@ class StateAction():
 
 class State:
     ident: str 
-    actions: dict[c_byte, StateAction] = dict()
+    actions: dict[c_byte, StateAction]
 
     def __init__(self, identity) -> None:
         self.ident = identity
+        self.actions = dict()
     
     def get_ident(self) -> str:
         return self.ident
@@ -30,6 +31,10 @@ class State:
     def process(self, value: c_byte):
         if value in self.actions:
             return self.actions[value] 
+        
+        # Check for default
+        if None in self.actions.keys():
+            return self.actions[None]
         
         raise Exception("State does not have action assigned to value %d", value)
     

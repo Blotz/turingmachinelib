@@ -92,22 +92,22 @@ def test_write():
     assert pointer.tape[pointer.index] == 1
 
 def test_compute():
+    # Simple TM for moving left and setting tape values to 1
     state = State("")
     pointer = Pointer(state) 
-
     sa = StateAction(1, MoveAction.LEFT, state)
     state.set_action(0, sa)
 
-
+    # Check to se if take is init to 0
     start_index = pointer.index
-
     assert pointer.tape[pointer.index] == 0
 
+    # Move the pointer to the left and set the starting value too 1
     pointer.compute()
     next_index = pointer.index
 
-    assert start_index - 1 == next_index
-    assert pointer.tape[start_index] == 1
+    assert start_index - 1 == next_index  # pointer moved correctly?
+    assert pointer.tape[start_index] == 1  # Value updated?
 
     pointer.compute()
 

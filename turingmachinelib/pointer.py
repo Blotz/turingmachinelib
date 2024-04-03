@@ -9,15 +9,18 @@ from turingmachinelib.state import State, StateAction
 class Pointer:
     # Max size of tape is limited the size of memory.
     # also the array index has a soft limit at 4300 digits (str-to-int-conversion)
-    index: int = 50
-    tape: list[c_byte] = [0]*100
-    alphabet: set[c_byte] = set(range(0,256))
+    index: int
+    tape: list[c_byte]
     state: State
 
     INCREASE_AMOUNT: int = 50
+    ALPHABET: set[c_byte] = set(range(0,256))
 
     def __init__(self, state: State) -> None:
         self.state = state  # Set the Inital State
+        self.index = 50
+        self.tape = [0]*100
+        
 
     def compute(self) -> None:
         """
