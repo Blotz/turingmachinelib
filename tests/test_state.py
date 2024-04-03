@@ -1,7 +1,7 @@
 import pytest
 
-from turingmachine.state import State, StateAction
-from turingmachine.structs import MoveAction
+from turingmachinelib.state import State, StateAction
+from turingmachinelib.structs import MoveAction
 
 
 def test_process():

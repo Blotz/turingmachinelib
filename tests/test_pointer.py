@@ -1,6 +1,6 @@
-from turingmachine.state import State, StateAction
-from turingmachine.pointer import Pointer
-from turingmachine.structs import MoveAction
+from turingmachinelib.state import State, StateAction
+from turingmachinelib.pointer import Pointer
+from turingmachinelib.structs import MoveAction
 
 def test_move_left():
     state = State("")
