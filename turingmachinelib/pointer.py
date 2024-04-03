@@ -3,8 +3,8 @@ from ctypes import c_byte
 from typing import Union
 
 
-from turingmachine.structs import MoveAction
-from turingmachine.state import State, StateAction
+from turingmachinelib.structs import MoveAction
+from turingmachinelib.state import State, StateAction
 
 class Pointer:
     # Max size of tape is limited the size of memory.

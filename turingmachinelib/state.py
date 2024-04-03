@@ -6,7 +6,7 @@ from typing import Union
 
 from dataclasses import dataclass
 
-from turingmachine.structs import MoveAction
+from turingmachinelib.structs import MoveAction
 
 @dataclass
 class StateAction():
