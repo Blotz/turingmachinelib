@@ -24,7 +24,14 @@ class State:
     
     def get_ident(self) -> str:
         return self.ident
-    
+
+    def get_next_states(self) -> list[list[c_byte, State]]:
+        next_states = []
+        for key, value in self.actions.items():
+            next_states.append([key, value.state])
+        
+        return next_states
+
     def set_action(self, value: c_byte, action: StateAction) -> None:
         self.actions[value] = action 
     

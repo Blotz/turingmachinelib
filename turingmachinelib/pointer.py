@@ -29,8 +29,6 @@ class Pointer:
         """
         Compute the current state
         """
-        if self.state.get_ident() == self.HALT_STATE:
-            raise Exception("Halt state reached. halting")
 
         action: StateAction = self.state.process(self.tape[self.index])
 
@@ -100,44 +98,8 @@ class Pointer:
     def get_output(self) -> str:
         return self.output
     
-    def print_tm(self) -> None:
-        """
-        --- --- --- --- --- --- ---
-           |123|123|123|123|123|
-         --- --- --- --- --- --- --- 
-                      ^ 
-        """
-        padding = 2
-        max_size = len(self.tape)
-        
-        left_index = self.index - padding
-        right_index = self.index + padding
-        left_buffer = 0
-        right_buffer = 0
-
-        if left_index < 0:
-            left_buffer = - left_index
-            left_index = 0
-        if right_index > max_size:
-            right_buffer = (right_index - max_size)
-            right_index = max_size
-
-        preview_tape = [0]*left_buffer + self.tape[left_index:right_index + 1] + [0]*right_buffer
-
-        output = ""
-        nl = "\n"
-        bar = " ---" * 7
-        box = "|%s"
-        wspace = "    "
-        arrow_up = "^"
-
-        output += bar + nl + wspace
-        for value in preview_tape:
-            output += box % str(value).rjust(3)
-        output += "|" + wspace + nl + bar + nl
-        output += " " * 14 + arrow_up + nl
-
-        output += "State: \"" + self.state.get_ident() + "\"" + nl
-        output += "Output: \"" + self.output + "\"" + nl
-
-        print(output)
+    def get_tape(self) -> list[c_byte]:
+        return self.tape
+    
+    def get_index(self) -> int:
+        return self.index
