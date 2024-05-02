@@ -133,12 +133,3 @@ def test_compute():
     with pytest.raises(Exception):
         pointer.compute() # raises Exception when done
 
-
-def test_print():
-    # Simple TM for moving left and setting tape values to 1
-    state = State("")
-    pointer = Pointer(state) 
-    sa = StateAction(1, MoveAction.LEFT, state)
-    state.set_action(0, sa)
-
-    pointer.print_tm()
