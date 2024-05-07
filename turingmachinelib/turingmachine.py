@@ -149,17 +149,40 @@ class TuringMachine():
     def print_next_states(self, stdscr: curses.window):
         current_state = self.pointer.get_state()
         next_states = current_state.get_next_states()
+        _, width = stdscr.getmaxyx()
+        width -= 2 # Remove border
 
-        for i, (value, state) in enumerate(next_states):
-            stdscr.addstr(i + 1, 1, f"{value} -> {state.get_ident()}")
+        line = 1
+        for (value, state) in next_states:
+            output = f"{value} -> {state.get_ident()}"
+            # group into width length lines
+            while len(output) > 0:
+                stdscr.addstr(line, 1, output[:width])
+                output = output[width:]
+                line += 1
+
     
     def print_output(self, stdscr: curses.window):
+        _, width = stdscr.getmaxyx()
+        width -= 2 # Remove border
         output = self.pointer.get_output()
-        stdscr.addstr(1, 1, output)
+        line = 1
+        while len(output) > 0:
+            stdscr.addstr(line, 1, output[:width])
+            output = output[width:]
+            line += 1
+
     
     def print_current_state(self, stdscr: curses.window):
+        _, width = stdscr.getmaxyx()
+        width -= 2  # Remove border
+        line = 1
         current_state = self.pointer.get_state()
-        stdscr.addstr(1, 1, current_state.get_ident())
+
+        while len(current_state)>0:
+            stdscr.addstr(line, 1, current_state[:width])
+            current_state = current_state[width:]
+            line += 1
     
     def print_tape(self, stdscr: curses.window):
         _, width = stdscr.getmaxyx()
