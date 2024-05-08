@@ -178,6 +178,7 @@ class TuringMachine():
         width -= 2  # Remove border
         line = 1
         current_state = self.pointer.get_state()
+        current_state = current_state.get_ident()
 
         while len(current_state)>0:
             stdscr.addstr(line, 1, current_state[:width])
